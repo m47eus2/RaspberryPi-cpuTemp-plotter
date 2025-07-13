@@ -1,0 +1,12 @@
+[Unit]
+Description=CPU temperature logger
+After=network.target
+
+[Service]
+User=raspberrypi
+WorkingDirectory=/home/raspberrypi/pythonBokeh/v3
+ExecStart=/home/raspberrypi/pythonBokeh/venv/bin/bokeh serve cpu.py --port 5000 --allow-websocket-origin=192.168.0.101:5000
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

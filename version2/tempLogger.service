@@ -1,0 +1,12 @@
+[Unit]
+Description=CPU temperature logger
+After=network.target
+
+[Service]
+User=raspberrypi
+WorkingDirectory=/home/raspberrypi/pythonBokeh/v3
+ExecStart=/home/raspberrypi/pythonBokeh/venv/bin/python /home/raspberrypi/pythonBokeh/v3/logger.py
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
