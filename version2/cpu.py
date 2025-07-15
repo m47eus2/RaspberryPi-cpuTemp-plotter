@@ -1,8 +1,6 @@
 from bokeh.layouts import column
 from bokeh.models import ColumnDataSource, Select
 from bokeh.plotting import figure, curdoc
-import csv
-import time
 import pandas as pd
 
 dataPath = "database.csv"
@@ -18,9 +16,10 @@ p.height=300
 
 select = Select(title='Zakres danych',value='60',
                 options=[
-                  ('60', '1 minuta'),
-                  ('300', '5 minut'),
-                  ('600', '10 minut')])
+                  ('60', '60 (1 min)'),
+                  ('300', '300 (5 min)'),
+                  ('600', '600 (10 min)'),
+                  ('1800', '1.8k (30 min)')])
 
 def updateSelect(attr, old, new):
   sample_count['value'] = int(new)
