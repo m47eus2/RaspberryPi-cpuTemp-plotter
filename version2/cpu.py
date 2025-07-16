@@ -6,7 +6,7 @@ import pandas as pd
 
 dataPath = "database.csv"
 
-sample_count = {'value':60}
+selectedTime = {'value':5}
 
 source = ColumnDataSource(data=dict(x=[], y=[]))
 
@@ -15,24 +15,27 @@ p.line(x='x', y='y', source=source, color="red", line_width=2)
 p.sizing_mode = "stretch_width"
 
 
-select = Select(title='Zakres danych',value='60',
+select = Select(title='Zakres danych',value='5',
                 options=[
-                  ('60', '60 (1 min)'),
-                  ('120', '120 (2min)'),
-                  ('180', '180 (3min)'), 
-                  ('300', '300 (5 min)'),
-                  ('600', '600 (10 min)'),
-                  ('1800', '1.8k (30 min)')])
+                  ('1', '1 min'),
+                  ('2', '2 min'),
+                  ('3', '3 min'),
+                  ('5', '5 min'),
+                  ('10', '10 min'),
+                  ('20', '20 min'),
+                  ('30', '30 min'),
+                  ('60', '60 min')])
 
 def updateSelect(attr, old, new):
-  sample_count['value'] = int(new)
+  selectedTime['value'] = int(new)
 
 select.on_change('value', updateSelect)
 
 def update():
   data = pd.read_csv(dataPath)
+  data = data.tail(3600)
   data['time'] = pd.to_datetime(data['time'], format="%Y-%m-%d %H:%M:%S")
-  cuttof = datetime.now() - timedelta(seconds = sample_count['value'])
+  cuttof = datetime.now() - timedelta(minutes = selectedTime['value'])
   data = data[data['time'] >= cuttof]
   source.data = dict(x=data['time'], y=data['cpuTemp'])
 
