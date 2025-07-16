@@ -2,7 +2,6 @@ import csv
 import time
 import os
 from datetime import datetime
-import pytz
 
 database = "database.csv"
 
@@ -23,6 +22,6 @@ def logTemp(now, temp):
 
 while True:
   temp = getTemp()
-  now = datetime.now(pytz.timezone("Europe/Warsaw")).strftime("%Y-%m-%d %H:%M:%S")
+  now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
   logTemp(now, temp)
   time.sleep(1)

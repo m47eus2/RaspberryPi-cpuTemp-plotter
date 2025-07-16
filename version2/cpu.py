@@ -1,6 +1,7 @@
 from bokeh.layouts import column, row
 from bokeh.models import ColumnDataSource, Select
 from bokeh.plotting import figure, curdoc
+from datetime import datetime, timedelta
 import pandas as pd
 
 dataPath = "database.csv"
@@ -30,8 +31,9 @@ select.on_change('value', updateSelect)
 
 def update():
   data = pd.read_csv(dataPath)
-  data = data.tail(sample_count['value'])
-  data['time'] = pd.to_datetime(data['time'])
+  data['time'] = pd.to_datetime(data['time'], format="%Y-%m-%d %H:%M:%S")
+  cuttof = datetime.now() - timedelta(seconds = sample_count['value'])
+  data = data[data['time'] >= cuttof]
   source.data = dict(x=data['time'], y=data['cpuTemp'])
 
 layout = column(p,select,sizing_mode='stretch_width')
