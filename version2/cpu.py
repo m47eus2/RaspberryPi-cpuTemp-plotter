@@ -3,13 +3,11 @@ from bokeh.models import ColumnDataSource, Select
 from bokeh.plotting import figure, curdoc
 from datetime import datetime, timedelta
 import pandas as pd
-
-dataPath = "database.csv"
+from datetime import datetime
 
 selectedTime = {'value':5}
 
 source = ColumnDataSource(data=dict(x=[], y=[]))
-
 p=figure(title='CPU temp', x_axis_type="datetime", height=800)
 p.line(x='x', y='y', source=source, color="red", line_width=2)
 p.sizing_mode = "stretch_width"
@@ -32,7 +30,10 @@ def updateSelect(attr, old, new):
 select.on_change('value', updateSelect)
 
 def update():
-  data = pd.read_csv(dataPath)
+  date = datetime.now().strftime("%Y-%m-%d")
+  PATH = f"database/{date}-log.csv"
+
+  data = pd.read_csv(PATH)
   data = data.tail(3600)
   data['time'] = pd.to_datetime(data['time'], format="%Y-%m-%d %H:%M:%S")
   cuttof = datetime.now() - timedelta(minutes = selectedTime['value'])
