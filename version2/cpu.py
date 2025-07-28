@@ -28,7 +28,8 @@ select = Select(title='Zakres danych',value='5',
                   ('360', '6 h'),
                   ('480', '8 h'),
                   ('720', '12 h'),
-                  ('1440', '24 h')])
+                  ('1440', '24 h'),
+                  ('2880', '48 h')])
 
 def updateSelect(attr, old, new):
   selectedTime['value'] = int(new)
@@ -37,10 +38,14 @@ select.on_change('value', updateSelect)
 
 def update():
   date = datetime.now().strftime("%Y-%m-%d")
-  PATH = f"database/{date}-log.csv"
+  recentDataPATH = f"database/{date}-log.csv"
+  agregatedDataPATH = "database/agrData.csv"
 
-  data = pd.read_csv(PATH)
+  recentData = pd.read_csv(recentDataPATH)
+  agregatedData = pd.read_csv(agregatedDataPATH)
+  data = pd.concat([agregatedData, recentData], ignore_index=True)
   #data = data.tail(86400)
+
   data['time'] = pd.to_datetime(data['time'], format="%Y-%m-%d %H:%M:%S")
   cuttof = datetime.now() - timedelta(minutes = selectedTime['value'])
   data = data[data['time'] >= cuttof]
