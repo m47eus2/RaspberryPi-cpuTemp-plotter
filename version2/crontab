@@ -1,0 +1,1 @@
+5 0 * * * /home/raspberrypi/pythonBokeh/venv/bin/python3 /home/raspberrypi/pythonBokeh/v3/agregate.py >> /home/raspberrypi/pythonBokeh/v3/database/agr.log
