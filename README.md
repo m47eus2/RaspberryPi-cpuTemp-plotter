@@ -1,3 +1,3 @@
 # RaspberryPi cpuTemp plotter
 
-🔥🔥🔥 Simple Live cpuTemp plotter for RaspberryPi made with Python and bokeh 🔥🔥🔥
+🔥🔥🔥 Simple Live cpu temperature web plotter for RaspberryPi made with Python and bokeh 🔥🔥🔥
